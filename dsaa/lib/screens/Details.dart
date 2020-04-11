@@ -1,12 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dsaa/models/UserModel.dart';
-import 'package:dsaa/providers/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:provider/provider.dart';
 
 class Details extends StatefulWidget {
   static final String route = "/detail";
@@ -20,7 +18,7 @@ class _DetailsState extends State<Details> {
   User u;
   @override
   void initState() {
-    show();
+    //show();
 
     super.initState();
   }
@@ -31,7 +29,7 @@ class _DetailsState extends State<Details> {
 
   @override
   Widget build(BuildContext context) {
-    u = Provider.of<database>(context, listen: false).user;
+    // u = Provider.of<database>(context, listen: false).user;
 
     return Scaffold(
         backgroundColor: Theme.of(context).accentColor,

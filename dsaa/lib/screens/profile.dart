@@ -1,12 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dsaa/models/UserModel.dart';
 import 'package:dsaa/providers/database.dart';
 import 'package:dsaa/screens/CropImagel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-CollectionReference ref = Firestore.instance.collection("portal");
+//CollectionReference ref = Firestore.instance.collection("portal");
 
 class Profile extends StatefulWidget {
   static final String route = "/profile";
@@ -23,18 +22,19 @@ class _ProfileState extends State<Profile> {
 
   @override
   void initState() {
-    user = Provider.of<database>(context).user;
+    show();
     super.initState();
   }
 
-//  show() async {
+  show() async {
+    user = await Provider.of<database>(context).user;
 //    ref.document(user.uid).snapshots().forEach((action) {
 //      setState(() {
 //        username = user.name;
 //        url = user.url;
 //      });
 //    });
-//  }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class _ProfileState extends State<Profile> {
           backgroundColor: Colors.transparent,
           elevation: 0,
         ),
-        body: SingleChildScrollView(
+        body: Steam(
           child: Column(
             children: <Widget>[
               ProfileHeader(

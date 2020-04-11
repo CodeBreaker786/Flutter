@@ -52,7 +52,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
         height: 50,
         items: [
           Icon(Icons.home),
-          Icon(Icons.view_list),
+          Icon(Icons.search),
           Icon(Icons.call_to_action),
           Icon(Icons.person_pin),
         ],
