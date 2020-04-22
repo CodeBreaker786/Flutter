@@ -1,4 +1,4 @@
-import 'package:dsaa/models/UserModel.dart';
+import 'package:firstproject/models/UserModel.dart';
 /**
  * Author: Damodar Lohani
  * profile: https://github.com/lohanidamodar

@@ -1,8 +1,8 @@
-import 'package:dsaa/models/AuthModel.dart';
-import 'package:dsaa/providers/database.dart';
-import 'package:dsaa/widgets/DashBoard.dart';
-import 'package:dsaa/widgets/ImageSlider.dart';
-import 'package:dsaa/widgets/drawer2.dart';
+import 'package:firstproject/models/AuthModel.dart';
+import 'package:firstproject/providers/database.dart';
+import 'package:firstproject/widgets/DashBoard.dart';
+import 'package:firstproject/widgets/ImageSlider.dart';
+import 'package:firstproject/widgets/drawer2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

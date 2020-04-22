@@ -44,9 +44,12 @@ class _ImageCaptureState extends State<ImageCapture> {
                 CropAspectRatioPreset.square,
               ],
         androidUiSettings: AndroidUiSettings(
+            cropFrameColor: Theme.of(context).primaryColor,
             toolbarTitle: 'Cropper',
-            toolbarColor: Colors.deepOrange,
-            toolbarWidgetColor: Colors.white,
+            toolbarColor: Theme.of(context).primaryColor,
+            cropGridColor: Theme.of(context).primaryColor,
+            toolbarWidgetColor: Theme.of(context).accentColor,
+            backgroundColor: Theme.of(context).accentColor,
             initAspectRatio: CropAspectRatioPreset.square,
             lockAspectRatio: true),
         iosUiSettings: IOSUiSettings(

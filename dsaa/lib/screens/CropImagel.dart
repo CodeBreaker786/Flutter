@@ -44,6 +44,7 @@ class _ImageCaptureState extends State<ImageCapture> {
                 CropAspectRatioPreset.square,
               ],
         androidUiSettings: AndroidUiSettings(
+            cropFrameColor: Theme.of(context).primaryColor,
             toolbarTitle: 'Cropper',
             toolbarColor: Colors.deepOrange,
             toolbarWidgetColor: Colors.white,
@@ -133,7 +134,7 @@ class _ImageCaptureState extends State<ImageCapture> {
                       onTap: () {
                         _pickImage(ImageSource.camera);
                       },
-                      label: 'Add Question',
+                      label: 'Take photo',
                       labelStyle: TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.white,
@@ -146,7 +147,7 @@ class _ImageCaptureState extends State<ImageCapture> {
                         _pickImage(ImageSource.gallery);
                       },
                       backgroundColor: Theme.of(context).accentColor,
-                      label: 'Start Quiz',
+                      label: 'select photo',
                       labelStyle: TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.white,
@@ -155,11 +156,11 @@ class _ImageCaptureState extends State<ImageCapture> {
                 ],
               )
             : FloatingActionButton.extended(
-                label: Text('Save'),
+                label: Text('upload'),
                 icon: Icon(Icons.save),
                 backgroundColor: Theme.of(context).primaryColor,
                 foregroundColor: Colors.white,
-                tooltip: 'Save',
+                tooltip: 'set as a profile',
                 onPressed: () async => {
                       setState(() {
                         isLoding = true;

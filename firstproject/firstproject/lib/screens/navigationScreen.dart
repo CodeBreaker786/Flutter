@@ -1,6 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:dsaa/screens/profile.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firstproject/screens/profile.dart';
 import 'package:flutter/material.dart';
 
 import 'Details.dart';

@@ -1,9 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:dsaa/providers/NavigationBarModel.dart';
 import 'package:dsaa/screens/profile.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'Details.dart';
 import 'Home.dart';
@@ -45,14 +43,16 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(Provider.of<NavigationBarModel>(context).navigationBar);
+    //print(Provider.of<NavigationBarModel>(context).navigationBar);
 
     return Scaffold(
+      backgroundColor: Theme.of(context).accentColor,
       bottomNavigationBar: CurvedNavigationBar(
         height: 50,
         items: [
           Icon(Icons.home),
           Icon(Icons.search),
+          Icon(Icons.add),
           Icon(Icons.call_to_action),
           Icon(Icons.person_pin),
         ],

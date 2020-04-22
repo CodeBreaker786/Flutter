@@ -1,4 +1,4 @@
-import 'package:dsaa/models/AuthModel.dart';
+import 'package:firstproject/models/AuthModel.dart';
 /**
  * Author: Damodar Lohani
  * profile: https://github.com/lohanidamodar

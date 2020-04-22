@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User {
   String phoneNo;
+  String email;
 
   String fatherName;
 
@@ -21,6 +22,7 @@ class User {
 
   User(
       {this.name,
+      this.email,
       this.fatherName,
       this.rollNo,
       this.clas,
@@ -78,6 +80,7 @@ class User {
 
   User fromMap(DocumentSnapshot map) {
     return User(
+        email: map['email'],
         uid: map['uid'],
         url: map['url'],
         status: map['status'],
