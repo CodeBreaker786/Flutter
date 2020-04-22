@@ -1,16 +1,16 @@
-import 'package:dsaa/providers/database.dart';
-import 'package:dsaa/screens/CropImagel.dart';
-import 'package:dsaa/screens/Details.dart';
-import 'package:dsaa/screens/Home.dart';
-import 'package:dsaa/screens/auth.dart';
-import 'package:dsaa/screens/profile.dart';
-import 'package:dsaa/screens/wraper.dart';
+import 'package:firstproject/providers/database.dart';
+import 'package:firstproject/screens/Details.dart';
+import 'package:firstproject/screens/Home.dart';
+import 'package:firstproject/screens/auth.dart';
+import 'package:firstproject/screens/profile.dart';
+import 'package:firstproject/screens/wraper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'models/AuthModel.dart';
 import 'models/UserModel.dart';
 import 'providers/NavigationBarModel.dart';
+import 'screens/CropImagel.dart';
 
 void main() => runApp(MyApp());
 

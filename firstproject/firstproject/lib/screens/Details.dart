@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dsaa/models/UserModel.dart';
+import 'package:firstproject/models/UserModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -70,7 +70,7 @@ class _DetailsState extends State<Details> {
               return ListView(
                 children: <Widget>[
                   SizedBox(
-                    height: 80,
+                    height: 100,
                   ),
                   ...searchResults.map((doc) {
                     return Card(

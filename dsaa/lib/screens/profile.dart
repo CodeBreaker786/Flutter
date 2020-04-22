@@ -1,9 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dsaa/models/UserModel.dart';
-import 'package:dsaa/providers/database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dsaa/screens/CropImagel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 //CollectionReference ref = Firestore.instance.collection("portal");
 
@@ -14,26 +13,20 @@ class Profile extends StatefulWidget {
   _ProfileState createState() => _ProfileState();
 }
 
-User user;
-
 class _ProfileState extends State<Profile> {
-  String username;
-  String url;
-
   @override
   void initState() {
-    show();
     super.initState();
   }
 
-  show() async {
-    user = await Provider.of<database>(context).user;
-//    ref.document(user.uid).snapshots().forEach((action) {
-//      setState(() {
-//        username = user.name;
-//        url = user.url;
-//      });
-//    });
+  getData() async {
+    FirebaseUser firebaseUser = await FirebaseAuth.instance.currentUser();
+    DocumentSnapshot snapshot = await Firestore.instance
+        .collection("portal")
+        .document(firebaseUser.uid)
+        .get();
+
+    return snapshot;
   }
 
   @override
@@ -46,37 +39,48 @@ class _ProfileState extends State<Profile> {
           backgroundColor: Colors.transparent,
           elevation: 0,
         ),
-        body: Steam(
-          child: Column(
-            children: <Widget>[
-              ProfileHeader(
-                avatar: user.uid == null
-                    ? AssetImage('images/person.jpg')
-                    : CachedNetworkImageProvider(user.url),
-                coverImage: user.uid == null
-                    ? AssetImage('images/dsa.jpg')
-                    : CachedNetworkImageProvider(user.url),
-                title: user.name == null ? "loding" : user.name,
-                actions: <Widget>[
-                  MaterialButton(
-                    color: Colors.white,
-                    shape: CircleBorder(),
-                    elevation: 5,
-                    child: Icon(Icons.edit),
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ImageCapture()),
-                      );
-                    },
-                  )
+        body: FutureBuilder(
+          future: getData(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Center(child: CircularProgressIndicator());
+            }
+            return SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  ProfileHeader(
+                    avatar: snapshot.data['url'] == null
+                        ? AssetImage('images/person.jpg')
+                        : CachedNetworkImageProvider(snapshot.data['url']),
+                    coverImage: snapshot.data['url'] == null
+                        ? AssetImage('images/dsa.jpg')
+                        : CachedNetworkImageProvider(snapshot.data['url']),
+                    title: snapshot.data['name'] == null
+                        ? "loding"
+                        : snapshot.data['name'],
+                    actions: <Widget>[
+                      MaterialButton(
+                        color: Colors.white,
+                        shape: CircleBorder(),
+                        elevation: 5,
+                        child: Icon(Icons.edit),
+                        onPressed: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ImageCapture()),
+                          );
+                        },
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 10.0),
+                  UserInfo(),
+                  //UserInfo(),
                 ],
               ),
-              const SizedBox(height: 10.0),
-              UserInfo(),
-              UserInfo(),
-            ],
-          ),
+            );
+          },
         ));
   }
 }
@@ -122,7 +126,7 @@ class UserInfo extends StatelessWidget {
                           ListTile(
                             leading: Icon(Icons.email),
                             title: Text("Email"),
-                            subtitle: Text(user.name),
+                            subtitle: Text("user.name"),
                           ),
                           ListTile(
                             leading: Icon(Icons.phone),

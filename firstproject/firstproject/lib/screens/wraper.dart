@@ -1,4 +1,4 @@
-import 'package:dsaa/models/UserModel.dart';
+import 'package:firstproject/models/UserModel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

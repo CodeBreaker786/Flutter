@@ -51,14 +51,15 @@ class AuthService {
 
   // register with email and password
   Future registerWithEmailAndPassword(
-      String email, String password, BuildContext context) async {
+      String name, String email, String password, BuildContext context) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser user = result.user;
 
       await _database.collection("portal").document(user.uid).setData({
-        'name': email,
+        'name': name,
+        'email': email,
         'fatherName': null,
         "rollNo": null,
         "clas": null,

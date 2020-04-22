@@ -3,8 +3,8 @@ import 'package:dsaa/screens/CropImagel.dart';
 import 'package:dsaa/screens/Details.dart';
 import 'package:dsaa/screens/Home.dart';
 import 'package:dsaa/screens/auth.dart';
+import 'package:dsaa/screens/practice.dart';
 import 'package:dsaa/screens/profile.dart';
-import 'package:dsaa/screens/wraper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
             accentColor: Colors.lightBlue[100], primaryColor: Colors.blue[400]),
-        home: wraper(),
+        home: practice(),
         routes: {
           HomeScreen.route: (context) => HomeScreen(),
           Details.route: (context) => Details(),
