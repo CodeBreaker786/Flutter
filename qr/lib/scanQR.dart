@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qrscan/qrscan.dart' as scanner;
 
 class scan extends StatefulWidget {
   @override
@@ -16,7 +15,7 @@ class _scanState extends State<scan> {
         child: Text(Result.toString()),
       ),
       floatingActionButton: FloatingActionButton(onPressed: () async {
-        String cameraScanResult = await scanner.scan();
+        String cameraScanResult;
         setState(() {
           Result = cameraScanResult;
         });

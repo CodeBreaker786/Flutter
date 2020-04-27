@@ -6,19 +6,8 @@ import 'package:university/widgets/drawer2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   static final String route = "/home";
-
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    Provider.of<database>(context, listen: false).update();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

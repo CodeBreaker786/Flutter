@@ -54,7 +54,7 @@ class _ladingState extends State<lading> {
               child: Icon(Icons.photo_library),
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => genrate()));
+                    MaterialPageRoute(builder: (context) => Genrate()));
               },
               backgroundColor: Theme.of(context).accentColor,
               label: 'select photo',

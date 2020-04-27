@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 
-class genrate extends StatefulWidget {
+class Genrate extends StatefulWidget {
   @override
-  _genrateState createState() => _genrateState();
+  _GenrateState createState() => _GenrateState();
 }
 
 TextEditingController textEditingController = TextEditingController();
 Image image;
 
-class _genrateState extends State<genrate> {
+class _GenrateState extends State<Genrate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

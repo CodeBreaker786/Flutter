@@ -32,7 +32,7 @@ class _DetailsState extends State<Details> {
     });
   }
 
-  onchanged(query) {
+  onQueryChanged(query) {
     handleSearch(query);
     if (query != "") {
       setState(() {
@@ -53,44 +53,7 @@ class _DetailsState extends State<Details> {
           color: Theme.of(context).accentColor,
           //color: Colors.grey,
           child: isLoding
-              ? FutureBuilder(
-                  future: searchResultsFuture,
-                  builder: (context, snapshots) {
-                    if (!snapshots.hasData) {
-                      return Center(
-                        child: SpinKitWave(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      );
-                    }
-                    List<User> searchResults = [];
-                    searchResults.clear();
-                    snapshots.data.documents.forEach((doc) {
-                      print(doc.toString());
-                      User user = User().fromMap(doc);
-                      searchResults.add(user);
-                    });
-                    return ListView(
-                      children: <Widget>[
-                        SizedBox(
-                          height: 80,
-                        ),
-                        ...searchResults.map((doc) {
-                          return Card(
-                            elevation: 10,
-                            child: ListTile(
-                              leading: CircleAvatar(
-                                  backgroundImage: doc.url != null
-                                      ? CachedNetworkImageProvider(doc.url)
-                                      : AssetImage('images/person.jpg')),
-                              title: Text(doc.name),
-                            ),
-                          );
-                        }).toList(),
-                      ],
-                    );
-                  },
-                )
+              ? _buildFutureBuilder()
               : Center(
                   child: Center(
                     child: Container(
@@ -119,7 +82,7 @@ class _DetailsState extends State<Details> {
                     cursorColor: Colors.black,
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.go,
-                    onChanged: onchanged,
+                    onChanged: onQueryChanged,
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.symmetric(horizontal: 15),
@@ -138,6 +101,47 @@ class _DetailsState extends State<Details> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildFutureBuilder() {
+    return FutureBuilder(
+      future: searchResultsFuture,
+      builder: (context, snapshots) {
+        if (!snapshots.hasData) {
+          return Center(
+            child: SpinKitWave(
+              color: Theme.of(context).primaryColor,
+            ),
+          );
+        }
+        List<User> searchResults = [];
+        searchResults.clear();
+        snapshots.data.documents.forEach((doc) {
+          print(doc.toString());
+          User user = User().fromMap(doc);
+          searchResults.add(user);
+        });
+        return ListView(
+          children: <Widget>[
+            SizedBox(
+              height: 120,
+            ),
+            ...searchResults.map((doc) {
+              return Card(
+                elevation: 10,
+                child: ListTile(
+                  leading: CircleAvatar(
+                      backgroundImage: doc.url != null
+                          ? CachedNetworkImageProvider(doc.url)
+                          : AssetImage('images/person.jpg')),
+                  title: Text(doc.name),
+                ),
+              );
+            }).toList(),
+          ],
+        );
+      },
     );
   }
 }

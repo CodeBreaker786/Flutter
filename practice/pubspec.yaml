@@ -1,5 +1,5 @@
-name: qr
-description: A new Flutter application.
+name: practice
+description: A new Flutter project.
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -17,12 +17,9 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
-  flutter_speed_dial: ^1.2.5
-   
-  dart_style: ^1.3.4
-  giffy_dialog: ^1.7.0
-
-
+  battery: ^0.3.1+10
+  sensors: ^0.4.2
+  device_info: ^0.4.2+2
   flutter:
     sdk: flutter
 

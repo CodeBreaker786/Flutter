@@ -81,97 +81,107 @@ class _ImageCaptureState extends State<ImageCapture> {
           title: Text("Upload Profile"),
           centerTitle: true,
         ),
-        body: _imageFile != null
-            ? Column(
-                children: <Widget>[
-                  LinearProgressIndicator(),
-                  Center(
-                      child: Container(
-                    padding: EdgeInsets.all(30),
-                    child: Image.file(_imageFile),
-                  )),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      FlatButton(
-                        color: Theme.of(context).accentColor,
-                        child: Icon(Icons.crop),
-                        onPressed: _cropImage,
-                      ),
-                      FlatButton(
-                        color: Theme.of(context).accentColor,
-                        child: Icon(Icons.refresh),
-                        onPressed: _clear,
-                      ),
-                    ],
-                  ),
-                ],
-              )
-            : null,
+        body: _imageFile != null ? _buildOnSelectImage() : Container(),
         floatingActionButton: _imageFile == null
-            ? SpeedDial(
-                animatedIcon: AnimatedIcons.menu_close,
-                animatedIconTheme: IconThemeData(size: 22),
-                visible: true,
-                onOpen: () {
-                  setState(() {
-                    isOpen = true;
-                  });
-                },
-                onClose: () {
-                  setState(() {
-                    isOpen = false;
-                  });
-                },
-                backgroundColor: Theme.of(context).primaryColor,
-                curve: Curves.fastOutSlowIn,
-                children: [
-                  // FAB 1
+            ? _buildFloatingButtonOnNoImage()
+            : _buildFloatingButtonOnImage());
+  }
 
-                  SpeedDialChild(
-                      child: Icon(Icons.camera),
-                      backgroundColor: Theme.of(context).accentColor,
-                      onTap: () {
-                        _pickImage(ImageSource.camera);
-                      },
-                      label: 'Take photo',
-                      labelStyle: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                          fontSize: 16.0),
-                      labelBackgroundColor: Theme.of(context).accentColor),
-                  // FAB 2
-                  SpeedDialChild(
-                      child: Icon(Icons.photo_library),
-                      onTap: () {
-                        _pickImage(ImageSource.gallery);
-                      },
-                      backgroundColor: Theme.of(context).accentColor,
-                      label: 'select photo',
-                      labelStyle: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                          fontSize: 16.0),
-                      labelBackgroundColor: Theme.of(context).accentColor)
-                ],
-              )
-            : FloatingActionButton.extended(
-                label: Text('upload'),
-                icon: Icon(Icons.save),
-                backgroundColor: Theme.of(context).primaryColor,
-                foregroundColor: Colors.white,
-                tooltip: 'set as a profile',
-                onPressed: () async => {
-                      setState(() {
-                        isLoding = true;
-                      }),
-                      url = await uploadFile(_imageFile),
-                      await uploadURL(url),
-                      setState(() {
-                        isLoding = false;
-                      }),
-                      Navigator.pop(context, url),
-                    }));
+  Widget _buildFloatingButtonOnImage() {
+    return FloatingActionButton.extended(
+        label: Text('upload'),
+        icon: Icon(Icons.save),
+        backgroundColor: Theme.of(context).primaryColor,
+        foregroundColor: Colors.white,
+        tooltip: 'set as a profile',
+        onPressed: () async => {
+              setState(() {
+                isLoding = true;
+              }),
+              url = await uploadFile(_imageFile),
+              await uploadURL(url),
+              setState(() {
+                isLoding = false;
+              }),
+              Navigator.pop(context, url),
+            });
+  }
+
+  Widget _buildFloatingButtonOnNoImage() {
+    return SpeedDial(
+      animatedIcon: AnimatedIcons.menu_close,
+      animatedIconTheme: IconThemeData(size: 22),
+      visible: true,
+      onOpen: () {
+        setState(() {
+          isOpen = true;
+        });
+      },
+      onClose: () {
+        setState(() {
+          isOpen = false;
+        });
+      },
+      backgroundColor: Theme.of(context).primaryColor,
+      curve: Curves.fastOutSlowIn,
+      children: [
+        // FAB 1
+
+        SpeedDialChild(
+            child: Icon(Icons.camera),
+            backgroundColor: Theme.of(context).accentColor,
+            onTap: () {
+              _pickImage(ImageSource.camera);
+            },
+            label: 'Take photo',
+            labelStyle: TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+                fontSize: 16.0),
+            labelBackgroundColor: Theme.of(context).accentColor),
+        // FAB 2
+        SpeedDialChild(
+            child: Icon(Icons.photo_library),
+            onTap: () {
+              _pickImage(ImageSource.gallery);
+            },
+            backgroundColor: Theme.of(context).accentColor,
+            label: 'select photo',
+            labelStyle: TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+                fontSize: 16.0),
+            labelBackgroundColor: Theme.of(context).accentColor)
+      ],
+    );
+  }
+
+  Widget _buildOnSelectImage() {
+    return Column(
+      children: <Widget>[
+        LinearProgressIndicator(),
+        Center(
+            child: Container(
+          padding: EdgeInsets.all(30),
+          child: Image.file(_imageFile),
+        )),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            FlatButton(
+              color: Theme.of(context).accentColor,
+              child: Icon(Icons.crop),
+              onPressed: _cropImage,
+            ),
+            FlatButton(
+              color: Theme.of(context).accentColor,
+              child: Icon(Icons.refresh),
+              onPressed: _clear,
+            ),
+          ],
+        ),
+      ],
+    );
   }
 
   Future<String> uploadFile(image) async {
