@@ -4,17 +4,18 @@ import 'package:university/models/UserModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:university/screens/ViewProfile.dart';
 
 TextEditingController searchController = TextEditingController();
 
-class Details extends StatefulWidget {
+class ScrechScreen extends StatefulWidget {
   static final String route = "/detail";
 
   @override
-  _DetailsState createState() => _DetailsState();
+  _ScrechScreenState createState() => _ScrechScreenState();
 }
 
-class _DetailsState extends State<Details> {
+class _ScrechScreenState extends State<ScrechScreen> {
   CollectionReference ref = Firestore.instance.collection("portal");
   Future<QuerySnapshot> searchResultsFuture;
   bool isLoding = false;
@@ -128,14 +129,23 @@ class _DetailsState extends State<Details> {
               height: 120,
             ),
             ...searchResults.map((doc) {
-              return Card(
-                elevation: 10,
-                child: ListTile(
-                  leading: CircleAvatar(
-                      backgroundImage: doc.url != null
-                          ? CachedNetworkImageProvider(doc.url)
-                          : AssetImage('images/person.jpg')),
-                  title: Text(doc.name),
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ProfileViewer(doc.url, doc.name, doc.email)));
+                },
+                child: Card(
+                  elevation: 10,
+                  child: ListTile(
+                    leading: CircleAvatar(
+                        backgroundImage: doc.url != null
+                            ? CachedNetworkImageProvider(doc.url)
+                            : AssetImage('images/person.jpg')),
+                    title: Text(doc.name),
+                  ),
                 ),
               );
             }).toList(),

@@ -245,7 +245,7 @@ class _AuthPageState extends State<AuthPage> {
             ),
             child: Text("Login"),
             onPressed: () async {
-              var response = await auth
+               await auth
                   .signInWithEmailAndPassword(
                       email.text, password.text, context)
                   .then((value) {

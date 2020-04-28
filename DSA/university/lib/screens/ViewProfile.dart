@@ -1,88 +1,35 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:photo_view/photo_view.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:university/screens/updateProfile.dart';
 
+class ProfileViewer extends StatelessWidget {
+  String imgUrl, email, name;
+  ProfileViewer(this.imgUrl, this.name, this.email);
 //CollectionReference ref = Firestore.instance.collection("portal");
-
-class Profile extends StatefulWidget {
-  static final String route = "/profile";
-
-  @override
-  _ProfileState createState() => _ProfileState();
-}
-
-class _ProfileState extends State<Profile> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  getData() async {
-    FirebaseUser firebaseUser = await FirebaseAuth.instance.currentUser();
-    DocumentSnapshot snapshot = await Firestore.instance
-        .collection("portal")
-        .document(firebaseUser.uid)
-        .get();
-
-    return snapshot;
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey.shade100,
-        extendBodyBehindAppBar: true,
-        extendBody: true,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
+      backgroundColor: Theme.of(context).accentColor,
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            ProfileHeader(
+              ctx: context,
+              avatar: imgUrl != null
+                  ? CachedNetworkImageProvider(imgUrl)
+                  : AssetImage('images/person.jpg'),
+              coverImage: imgUrl != null
+                  ? CachedNetworkImageProvider(imgUrl)
+                  : AssetImage('images/person.jpg'),
+              title: name,
+            ),
+            const SizedBox(height: 10.0),
+            UserInfo(email),
+            //UserInfo(),
+          ],
         ),
-        body: FutureBuilder(
-          future: getData(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return Center(child: CircularProgressIndicator());
-            }
-            return SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  ProfileHeader(
-                    avatar: snapshot.data['url'] == null
-                        ? AssetImage('images/person.jpg')
-                        : CachedNetworkImageProvider(snapshot.data['url']),
-                    coverImage: snapshot.data['url'] == null
-                        ? AssetImage('images/dsa.jpg')
-                        : CachedNetworkImageProvider(snapshot.data['url']),
-                    title: snapshot.data['name'] == null
-                        ? "loding"
-                        : snapshot.data['name'],
-                    actions: <Widget>[
-                      MaterialButton(
-                        color: Colors.white,
-                        shape: CircleBorder(),
-                        elevation: 5,
-                        child: Icon(Icons.edit),
-                        onPressed: () async {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => UpdateProfile()),
-                          );
-                        },
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 10.0),
-                  UserInfo(snapshot.data['email']),
-                  //UserInfo(),
-                ],
-              ),
-            );
-          },
-        ));
+      ),
+    );
   }
 }
 
@@ -162,9 +109,11 @@ class ProfileHeader extends StatelessWidget {
   final String title;
   final String subtitle;
   final List<Widget> actions;
+  final BuildContext ctx;
 
   const ProfileHeader(
       {Key key,
+      @required this.ctx,
       @required this.coverImage,
       @required this.avatar,
       @required this.title,
@@ -176,6 +125,16 @@ class ProfileHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          child: Container(
+              child: IconButton(
+                  //color: Theme.of(context).primaryColor,
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.pop(ctx);
+                  })),
+        ),
         Ink(
           height: 240,
           decoration: BoxDecoration(
@@ -259,7 +218,6 @@ class Avatar extends StatelessWidget {
           child: CircleAvatar(
             radius: radius - borderWidth,
             backgroundImage: image,
-            //child: PhotoView(imageProvider: image),
           ),
         ));
   }

@@ -18,10 +18,25 @@ class ImageSlider extends StatelessWidget {
                 clipBehavior: Clip.antiAlias,
                 elevation: 10,
                 child: Container(
+                  alignment: Alignment.bottomCenter,
+                  width: double.infinity,
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage('images/dsa.jpg'),
                           fit: BoxFit.cover)),
+                  child: Card(
+                    color: Colors.transparent,
+                    child: Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: Text(
+                        "IEEE",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
                 ),
               ));
         });

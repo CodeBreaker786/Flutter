@@ -10,13 +10,15 @@ import 'package:image_picker/image_picker.dart';
 
 CollectionReference ref = Firestore.instance.collection("portal");
 
-class ImageCapture extends StatefulWidget {
-  static final String route = "/cropImage";
+class UpdateProfile extends StatefulWidget {
+  static final String route = "/UpdateProfile";
+  String title;
+  UpdateProfile({this.title});
 
-  createState() => _ImageCaptureState();
+  createState() => _UpdateProfileState();
 }
 
-class _ImageCaptureState extends State<ImageCapture> {
+class _UpdateProfileState extends State<UpdateProfile> {
   File _imageFile;
   bool isOpen = false;
   bool isLoding = false;
@@ -61,7 +63,8 @@ class _ImageCaptureState extends State<ImageCapture> {
 
   /// Select an image via gallery or camera
   Future<void> _pickImage(ImageSource source) async {
-    File selected = await ImagePicker.pickImage(source: source);
+    File selected = await ImagePicker.pickImage(
+        source: source, maxHeight: 675, maxWidth: 960);
 
     setState(() {
       _imageFile = selected;
@@ -78,10 +81,20 @@ class _ImageCaptureState extends State<ImageCapture> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
-          title: Text("Upload Profile"),
+          title: Text("Update Profile"),
           centerTitle: true,
         ),
-        body: _imageFile != null ? _buildOnSelectImage() : Container(),
+        body: _imageFile != null
+            ? _buildOnSelectImage()
+            : Container(
+                child: Center(
+                    child: Text("Please Select a Photo",
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.italic,
+                            color: Colors.grey))),
+              ),
         floatingActionButton: _imageFile == null
             ? _buildFloatingButtonOnNoImage()
             : _buildFloatingButtonOnImage());
@@ -157,30 +170,37 @@ class _ImageCaptureState extends State<ImageCapture> {
   }
 
   Widget _buildOnSelectImage() {
-    return Column(
-      children: <Widget>[
-        LinearProgressIndicator(),
-        Center(
-            child: Container(
-          padding: EdgeInsets.all(30),
-          child: Image.file(_imageFile),
-        )),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            FlatButton(
-              color: Theme.of(context).accentColor,
-              child: Icon(Icons.crop),
-              onPressed: _cropImage,
-            ),
-            FlatButton(
-              color: Theme.of(context).accentColor,
-              child: Icon(Icons.refresh),
-              onPressed: _clear,
-            ),
-          ],
-        ),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          isLoding == true
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Container(child: LinearProgressIndicator()),
+                )
+              : Container(),
+          Center(
+              child: Container(
+            padding: EdgeInsets.all(30),
+            child: Image.file(_imageFile),
+          )),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              FlatButton(
+                color: Theme.of(context).accentColor,
+                child: Icon(Icons.crop),
+                onPressed: _cropImage,
+              ),
+              FlatButton(
+                color: Theme.of(context).accentColor,
+                child: Icon(Icons.refresh),
+                onPressed: _clear,
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 

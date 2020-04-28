@@ -1,3 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:university/models/AuthModel.dart';
 import 'package:university/models/UserModel.dart';
 /**
  * Author: Damodar Lohani
@@ -15,6 +19,7 @@ User user;
 
 class _LightDrawerPageState extends State<LightDrawerPage> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+  String email, name;
 
   final Color primary = Colors.white;
 
@@ -37,6 +42,16 @@ class _LightDrawerPageState extends State<LightDrawerPage> {
     super.initState();
   }
 
+  getData() async {
+    FirebaseUser firebaseUser = await FirebaseAuth.instance.currentUser();
+    DocumentSnapshot snapshot = await Firestore.instance
+        .collection("portal")
+        .document(firebaseUser.uid)
+        .get();
+
+    return snapshot;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -57,33 +72,54 @@ class _LightDrawerPageState extends State<LightDrawerPage> {
                       Icons.power_settings_new,
                       color: active,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      AuthService().signOut();
+                    },
                   ),
                 ),
-                Container(
-                  height: 90,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: LinearGradient(
-                          colors: [Colors.orange, Colors.deepOrange])),
-                  child: CircleAvatar(
-                    backgroundImage: AssetImage('images/dsa.jpg'),
-                    radius: 40,
-                  ),
-                ),
+                FutureBuilder(
+                    future: getData(),
+                    builder: (context, userSnapshot) {
+                      if (userSnapshot.hasData) {
+                        return Column(
+                          children: <Widget>[
+                            Container(
+                                height: 90,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    gradient: LinearGradient(colors: [
+                                      Theme.of(context).accentColor,
+                                      Theme.of(context).primaryColor
+                                    ])),
+                                child: CircleAvatar(
+                                  backgroundImage: CachedNetworkImageProvider(
+                                      userSnapshot.data['url']),
+                                  radius: 40,
+                                )),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              userSnapshot.data['name'],
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            Text(
+                              userSnapshot.data['email'],
+                              style: TextStyle(color: active, fontSize: 16.0),
+                            )
+                          ],
+                        );
+                      } else {
+                        return Container(
+                            height: 140,
+                            child: Center(child: CircularProgressIndicator()));
+                      }
+                    }),
                 SizedBox(height: 5.0),
-                Text(
-                  "erika costell",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.w600),
-                ),
-                Text(
-                  "@erika07",
-                  style: TextStyle(color: active, fontSize: 16.0),
-                ),
                 SizedBox(height: 30.0),
                 _buildRow(Icons.home, "Home"),
                 _buildDivider(),

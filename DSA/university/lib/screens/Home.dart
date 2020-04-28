@@ -11,19 +11,12 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<DataBase>(context).update();
     return Scaffold(
       backgroundColor: Theme.of(context).accentColor,
       drawer: LightDrawerPage(),
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.arrow_forward),
-            onPressed: () async {
-              AuthService().signOut();
-            },
-          )
-        ],
         elevation: 30,
         title: Text("Home"),
       ),

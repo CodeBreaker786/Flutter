@@ -14,8 +14,10 @@ class MyChart extends StatelessWidget {
       rankKey: 'Quarterly Profits',
     ),
   ];
+
   @override
   Widget build(BuildContext context) {
+    double size = MediaQuery.of(context).size.width;
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -31,7 +33,7 @@ class MyChart extends StatelessWidget {
                 padding: EdgeInsets.all(8.0),
                 child: CircularPercentIndicator(
                   addAutomaticKeepAlive: true,
-                  radius: 100.0,
+                  radius: size * 0.26,
                   lineWidth: 10.0,
                   backgroundColor: Colors.red,
                   animation: true,
@@ -58,9 +60,9 @@ class MyChart extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "permanent",
+                    "Permanent",
                     style: TextStyle(
-                      fontSize: 20.0,
+                      fontSize: size * 0.047,
                       color: Colors.blueAccent,
                     ),
                   ),
@@ -85,7 +87,7 @@ class MyChart extends StatelessWidget {
                   Text(
                     "Volunteer",
                     style: TextStyle(
-                      fontSize: 20.0,
+                      fontSize: size * 0.047,
                       color: Colors.blueAccent,
                     ),
                   ),
