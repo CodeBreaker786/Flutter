@@ -30,15 +30,15 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
-            textTheme: GoogleFonts.dancingScriptTextTheme(
-              Theme.of(context).textTheme,
-            ),
+            // textTheme: GoogleFonts.dancingScriptTextTheme(
+            //   Theme.of(context).textTheme,
+            // ),
             accentColor: Colors.lightBlue[100],
             primaryColor: Colors.blue[400]),
         home: wraper(),
         routes: {
           HomeScreen.route: (context) => HomeScreen(),
-          ScrechScreen.route: (context) => ScrechScreen(),
+          SearchScreen.route: (context) => SearchScreen(),
           Profile.route: (context) => Profile(),
           AuthPage.route: (context) => AuthPage(),
         },

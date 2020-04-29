@@ -1,9 +1,19 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:university/models/PostModel.dart';
+import 'package:university/models/UserModel.dart';
+import 'package:university/providers/database.dart';
 import 'package:university/screens/uploadPost.dart';
+import 'package:university/widgets/postBuilder.dart';
+
+CollectionReference postsRef = Firestore.instance.collection("posts");
 
 class Posts extends StatefulWidget {
   const Posts({Key key}) : super(key: key);
@@ -13,10 +23,13 @@ class Posts extends StatefulWidget {
 }
 
 class _PostsState extends State<Posts> {
+  Future<QuerySnapshot> searchResultsFuture;
   File _imageFile;
   bool isOpen = false;
+  User user;
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<DataBase>(context).currentUser;
     return Scaffold(
       backgroundColor: Theme.of(context).accentColor,
       appBar: AppBar(
@@ -27,13 +40,53 @@ class _PostsState extends State<Posts> {
         onRefresh: () async {
           return Duration(milliseconds: 30000);
         },
-        child: FutureBuilder(builder: (context, index) {
-          return Container(
-            child: Text("data"),
-          );
-        }),
+        child: _buildFutureBuilder(),
       ),
       floatingActionButton: _buildFloatingButton(),
+    );
+  }
+
+  handleSearch() async {
+    Future<QuerySnapshot> users = postsRef.getDocuments();
+    searchResultsFuture = users;
+    return searchResultsFuture;
+  }
+
+  Widget _buildFutureBuilder() {
+    return FutureBuilder(
+      future: handleSearch(),
+      builder: (context, snapshots) {
+        if (!snapshots.hasData) {
+          print(snapshots.hasData);
+          return Center(
+            child: SpinKitWave(
+              color: Theme.of(context).primaryColor,
+            ),
+          );
+        }
+        List<Post> searchResults = [];
+        searchResults.clear();
+        snapshots.data.documents.forEach((doc) {
+          Post user = Post.fromMap(doc);
+          searchResults.add(user);
+        });
+        if (searchResults.isEmpty) {
+          return Center(
+            child: Text(
+              "No Post Available Yet",
+              style: TextStyle(fontSize: 20),
+            ),
+          );
+        }
+
+        return ListView(
+          children: <Widget>[
+            ...searchResults.map((doc) {
+              return PostBuilder(doc);
+            }).toList(),
+          ],
+        );
+      },
     );
   }
 

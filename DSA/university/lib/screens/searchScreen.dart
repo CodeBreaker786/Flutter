@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:university/models/UserModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,14 +9,14 @@ import 'package:university/screens/ViewProfile.dart';
 
 TextEditingController searchController = TextEditingController();
 
-class ScrechScreen extends StatefulWidget {
+class SearchScreen extends StatefulWidget {
   static final String route = "/detail";
 
   @override
-  _ScrechScreenState createState() => _ScrechScreenState();
+  _SearchScreenState createState() => _SearchScreenState();
 }
 
-class _ScrechScreenState extends State<ScrechScreen> {
+class _SearchScreenState extends State<SearchScreen> {
   CollectionReference ref = Firestore.instance.collection("portal");
   Future<QuerySnapshot> searchResultsFuture;
   bool isLoding = false;
@@ -25,29 +26,12 @@ class _ScrechScreenState extends State<ScrechScreen> {
     super.initState();
   }
 
-  handleSearch(String query) {
-    Future<QuerySnapshot> users =
-        ref.where("name", isGreaterThanOrEqualTo: query).getDocuments();
-    setState(() {
-      searchResultsFuture = users;
-    });
-  }
-
-  onQueryChanged(query) {
-    handleSearch(query);
-    if (query != "") {
-      setState(() {
-        isLoding = true;
-      });
-    } else {
-      setState(() {
-        isLoding = false;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    return _buildBackgroundStack();
+  }
+
+  Widget _buildBackgroundStack() {
     return Stack(
       children: <Widget>[
         Container(
@@ -123,35 +107,71 @@ class _ScrechScreenState extends State<ScrechScreen> {
           User user = User().fromMap(doc);
           searchResults.add(user);
         });
-        return ListView(
-          children: <Widget>[
-            SizedBox(
-              height: 120,
-            ),
-            ...searchResults.map((doc) {
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              ProfileViewer(doc.url, doc.name, doc.email)));
-                },
-                child: Card(
-                  elevation: 10,
-                  child: ListTile(
-                    leading: CircleAvatar(
-                        backgroundImage: doc.url != null
-                            ? CachedNetworkImageProvider(doc.url)
-                            : AssetImage('images/person.jpg')),
-                    title: Text(doc.name),
-                  ),
-                ),
-              );
-            }).toList(),
-          ],
-        );
+        if (searchResults.isEmpty) {
+          return _buildOnNoData();
+        }
+        return _buildOnData(searchResults);
       },
     );
+  }
+
+  Widget _buildOnData(searchResults) {
+    return ListView(
+      children: <Widget>[
+        SizedBox(
+          height: 120,
+        ),
+        ...searchResults.map((doc) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          ProfileViewer(doc.url, doc.name, doc.email)));
+            },
+            child: Card(
+              elevation: 10,
+              child: ListTile(
+                leading: CircleAvatar(
+                    backgroundImage: doc.url != null
+                        ? CachedNetworkImageProvider(doc.url)
+                        : AssetImage('images/person.jpg')),
+                title: Text(doc.name),
+              ),
+            ),
+          );
+        }).toList(),
+      ],
+    );
+  }
+
+  Widget _buildOnNoData() {
+    return Center(
+        child: Text(
+      "No Post Available Yet",
+      style: TextStyle(fontSize: 20),
+    ));
+  }
+
+  handleSearch(String query) {
+    Future<QuerySnapshot> users =
+        ref.where("name", isGreaterThanOrEqualTo: query).getDocuments();
+    setState(() {
+      searchResultsFuture = users;
+    });
+  }
+
+  onQueryChanged(query) {
+    handleSearch(query);
+    if (query != "") {
+      setState(() {
+        isLoding = true;
+      });
+    } else {
+      setState(() {
+        isLoding = false;
+      });
+    }
   }
 }

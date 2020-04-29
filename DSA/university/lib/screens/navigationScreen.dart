@@ -3,8 +3,7 @@ import 'package:university/screens/post.dart';
 import 'package:university/screens/profile.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-
-import 'Details.dart';
+import 'package:university/screens/searchScreen.dart';
 import 'Home.dart';
 import 'auth.dart';
 
@@ -66,7 +65,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
       body: PageView(
         children: <Widget>[
           HomeScreen(),
-          Details(),
+          SearchScreen(),
           Posts(),
           AuthPage(),
           Profile()

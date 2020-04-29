@@ -6,12 +6,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:university/models/PostModel.dart';
 import 'package:university/models/UserModel.dart';
 import 'package:university/providers/database.dart';
 import 'package:uuid/uuid.dart';
 
-CollectionReference ref = Firestore.instance.collection("portal");
+CollectionReference portalRef = Firestore.instance.collection("portal");
 
 class UploadScreen extends StatefulWidget {
   File cropedImage;
@@ -75,15 +77,19 @@ class _UploadScreenState extends State<UploadScreen> {
           ),
           centerTitle: true,
           actions: <Widget>[
-            isLoding != true
+            isLoding != false
                 ? IconButton(
                     icon: Icon(Icons.check),
                     onPressed: () async {
                       await uploadFile(_imageFile);
                       Navigator.pop(context);
                     })
-                : CircularProgressIndicator(
-                    strokeWidth: 1,
+                : Container(
+                    height: 6,
+                    width: 10,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 1,
+                    ),
                   )
           ],
         ),
@@ -123,7 +129,7 @@ class _UploadScreenState extends State<UploadScreen> {
     setState(() {
       isLoding = true;
     });
-    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    //FirebaseUser user = await FirebaseAuth.instance.currentUser();
     String postUid = Uuid().v4();
     StorageReference storageReference = FirebaseStorage.instance
         .ref()
@@ -134,12 +140,30 @@ class _UploadScreenState extends State<UploadScreen> {
     String fileUrl = await storageReference.getDownloadURL();
     print('File Uploaded');
 
-    print(user.uid);
-    await ref.document(user.uid).collection('posts').document(postUid).setData({
-      'postId': postUid,
-      'ownerId': user.uid,
-      'imgUrl': fileUrl,
-    });
+    DateTime datetime = DateTime.now();
+
+    print(datetime.toString());
+
+    Post post = Post(
+        postId: postUid,
+        ownerId: user.uid,
+        photoUrl: fileUrl,
+        ownerName: user.name,
+        ownerImgUrl: user.url,
+        date: DateFormat.yMMMMd("en_US").format(datetime),
+        time: DateFormat.jm().format(datetime)
+        // date: DateFormat.(time))
+        );
+    await portalRef
+        .document(user.uid)
+        .collection('posts')
+        .document(postUid)
+        .setData(
+          post.fromUser(),
+        );
+    await Firestore.instance.collection('posts').document(postUid).setData(
+          post.fromUser(),
+        );
 
     //return storageReference.getDownloadURL();
   }
