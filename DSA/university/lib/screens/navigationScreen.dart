@@ -1,9 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter/material.dart';
 import 'package:university/screens/post.dart';
 import 'package:university/screens/profile.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
 import 'package:university/screens/searchScreen.dart';
+
 import 'Home.dart';
 import 'auth.dart';
 
@@ -13,7 +13,6 @@ class NavigationScreen extends StatefulWidget {
 }
 
 class _NavigationScreenState extends State<NavigationScreen> {
-  final FirebaseDatabase _database = FirebaseDatabase.instance;
   PageController pageController;
   int pageIndex = 0;
 
@@ -43,24 +42,29 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //print(Provider.of<NavigationBarModel>(context).navigationBar);
+    //bool offset = Provider.of<NavigationBarModel>(context).navigationBar;
 
     return Scaffold(
       backgroundColor: Theme.of(context).accentColor,
-      bottomNavigationBar: CurvedNavigationBar(
-        height: 50,
-        items: [
-          Icon(Icons.home),
-          Icon(Icons.search),
-          Icon(Icons.add),
-          Icon(Icons.call_to_action),
-          Icon(Icons.person_pin),
-        ],
-        // color: Color(0xff00224B),backgroundColor: Theme.of(context).primaryColor,
-        index: pageIndex,
-        color: Theme.of(context).primaryColor,
-        onTap: onTap,
-        backgroundColor: Theme.of(context).accentColor,
+      bottomNavigationBar: Offstage(
+        offstage: false,
+        child: CurvedNavigationBar(
+          height: 50,
+
+          items: [
+            Icon(Icons.home),
+            Icon(Icons.search),
+            Icon(Icons.add),
+            Icon(Icons.call_to_action),
+            Icon(Icons.person_pin),
+          ],
+          // color: Color(0xff00224B),backgroundColor: Theme.of(context).primaryColor,
+          index: pageIndex,
+          color: Theme.of(context).primaryColor,
+          // color: Colors.transparent,
+          onTap: onTap,
+          backgroundColor: Theme.of(context).accentColor,
+        ),
       ),
       body: PageView(
         children: <Widget>[

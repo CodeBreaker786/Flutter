@@ -1,4 +1,3 @@
-import 'package:university/models/AuthModel.dart';
 /**
  * Author: Damodar Lohani
  * profile: https://github.com/lohanidamodar
@@ -6,6 +5,7 @@ import 'package:university/models/AuthModel.dart';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:university/models/AuthModel.dart';
 
 class AuthPage extends StatefulWidget {
   static final String route = "/authication";
@@ -127,7 +127,9 @@ class _AuthPageState extends State<AuthPage> {
                   icon: Icon(FontAwesomeIcons.google,
                       color: Theme.of(context).primaryColor),
                   label: Text("Continue with Google"),
-                  onPressed: () {},
+                  onPressed: () async {
+                    await auth.signInWithGoogle();
+                  },
                 ),
                 const SizedBox(height: 20.0),
               ],
@@ -245,7 +247,7 @@ class _AuthPageState extends State<AuthPage> {
             ),
             child: Text("Login"),
             onPressed: () async {
-               await auth
+              await auth
                   .signInWithEmailAndPassword(
                       email.text, password.text, context)
                   .then((value) {

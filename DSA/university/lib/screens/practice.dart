@@ -4,9 +4,19 @@ class practice extends StatelessWidget {
   @override
   build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-      title: Text("practice"),
-    ));
+      backgroundColor: Theme.of(context).primaryColor,
+      appBar: AppBar(
+        title: Text("About Us"),
+      ),
+      body: Center(
+          child: Container(
+        width: 380,
+        height: 380,
+        child: Image.asset(
+          'images/code.png',
+        ),
+      )),
+    );
   }
 }
 //CarouselSlider.builder(

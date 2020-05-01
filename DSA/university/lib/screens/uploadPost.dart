@@ -30,6 +30,7 @@ class _UploadScreenState extends State<UploadScreen> {
   User user;
 
   _UploadScreenState(this._imageFile);
+
   Future<void> _cropImage() async {
     File cropped = await ImageCropper.cropImage(
         sourcePath: _imageFile.path,
@@ -77,20 +78,14 @@ class _UploadScreenState extends State<UploadScreen> {
           ),
           centerTitle: true,
           actions: <Widget>[
-            isLoding != false
+            isLoding != true
                 ? IconButton(
                     icon: Icon(Icons.check),
                     onPressed: () async {
                       await uploadFile(_imageFile);
                       Navigator.pop(context);
                     })
-                : Container(
-                    height: 6,
-                    width: 10,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 1,
-                    ),
-                  )
+                : Container()
           ],
         ),
         body: Column(
@@ -104,16 +99,31 @@ class _UploadScreenState extends State<UploadScreen> {
                     child: Container(child: LinearProgressIndicator()),
                   )
                 : Container(),
-            AspectRatio(
-              aspectRatio: 16 / 11,
-              child: Container(
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: FileImage(
-                          _imageFile,
-                        ),
-                        fit: BoxFit.cover)),
-              ),
+            Stack(
+              children: <Widget>[
+                AspectRatio(
+                  aspectRatio: 16 / 11,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: FileImage(
+                              _imageFile,
+                            ),
+                            fit: BoxFit.cover)),
+                  ),
+                ),
+                Positioned(
+                    child: Container(
+                        alignment: Alignment.topRight,
+                        child: IconButton(
+                            icon: Icon(
+                              Icons.crop,
+                              size: 30,
+                            ),
+                            onPressed: () {
+                              _cropImage();
+                            }))),
+              ],
             ),
             ListTile(
               leading: CircleAvatar(

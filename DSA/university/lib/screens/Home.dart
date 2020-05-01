@@ -1,18 +1,20 @@
-import 'package:university/models/AuthModel.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:university/providers/database.dart';
 import 'package:university/widgets/DashBoard.dart';
 import 'package:university/widgets/ImageSlider.dart';
 import 'package:university/widgets/drawer2.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   static final String route = "/home";
 
   @override
   Widget build(BuildContext context) {
     Provider.of<DataBase>(context).update();
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Theme.of(context).accentColor,
       drawer: LightDrawerPage(),
       appBar: AppBar(

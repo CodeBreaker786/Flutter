@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -47,14 +46,14 @@ class _PostsState extends State<Posts> {
   }
 
   handleSearch() async {
-    Future<QuerySnapshot> users = postsRef.getDocuments();
-    searchResultsFuture = users;
+    Stream<QuerySnapshot> users = postsRef.snapshots();
+    //searchResultsFuture = users;
     return searchResultsFuture;
   }
 
   Widget _buildFutureBuilder() {
-    return FutureBuilder(
-      future: handleSearch(),
+    return StreamBuilder<QuerySnapshot>(
+      stream: postsRef.snapshots(),
       builder: (context, snapshots) {
         if (!snapshots.hasData) {
           print(snapshots.hasData);

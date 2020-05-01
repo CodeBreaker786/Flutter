@@ -1,12 +1,12 @@
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:university/providers/database.dart';
 import 'package:university/screens/Home.dart';
 import 'package:university/screens/auth.dart';
 import 'package:university/screens/profile.dart';
 import 'package:university/screens/searchScreen.dart';
 import 'package:university/screens/wraper.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
 import 'models/AuthModel.dart';
 import 'models/UserModel.dart';
 import 'providers/NavigationBarModel.dart';

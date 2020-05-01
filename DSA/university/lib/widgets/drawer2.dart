@@ -1,14 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:university/models/AuthModel.dart';
-import 'package:university/models/UserModel.dart';
 /**
  * Author: Damodar Lohani
  * profile: https://github.com/lohanidamodar
  */
 
 import 'package:flutter/material.dart';
+import 'package:university/models/AuthModel.dart';
+import 'package:university/models/UserModel.dart';
+import 'package:university/screens/practice.dart';
 
 class LightDrawerPage extends StatefulWidget {
   @override
@@ -30,6 +31,13 @@ class _LightDrawerPageState extends State<LightDrawerPage> {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(LightDrawerPage oldWidget) {
+    // Provider.of<NavigationBarModel>(context, listen: false).navigationBar =
+    //true;
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -93,8 +101,11 @@ class _LightDrawerPageState extends State<LightDrawerPage> {
                                       Theme.of(context).primaryColor
                                     ])),
                                 child: CircleAvatar(
-                                  backgroundImage: CachedNetworkImageProvider(
-                                      userSnapshot.data['url']),
+                                  backgroundImage:
+                                      userSnapshot.data['url'] == null
+                                          ? AssetImage('images/person.jpg')
+                                          : CachedNetworkImageProvider(
+                                              userSnapshot.data['url']),
                                   radius: 40,
                                 )),
                             SizedBox(
@@ -150,45 +161,56 @@ class _LightDrawerPageState extends State<LightDrawerPage> {
     );
   }
 
-  Widget _buildRow(IconData icon, String title, {bool showBadge = false}) {
+  Widget _buildRow(
+    IconData icon,
+    String title, {
+    bool showBadge = false,
+  }) {
     final TextStyle tStyle = TextStyle(color: active, fontSize: 16.0);
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Row(children: [
-        Icon(
-          icon,
-          color: active,
-        ),
-        SizedBox(width: 10.0),
-        Text(
-          title,
-          style: tStyle,
-        ),
-        Spacer(),
-        if (showBadge)
-          Material(
-            color: Colors.deepOrange,
-            elevation: 5.0,
-            shadowColor: Colors.red,
-            borderRadius: BorderRadius.circular(5.0),
-            child: Container(
-              width: 25,
-              height: 25,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: Colors.deepOrange,
-                borderRadius: BorderRadius.circular(5.0),
+    return GestureDetector(
+      onTap: () {
+        Navigator.pop(context);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => practice()));
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 5.0),
+        child: Row(children: [
+          Icon(
+            icon,
+            color: active,
+          ),
+          SizedBox(width: 10.0),
+          Text(
+            title,
+            style: tStyle,
+          ),
+          Spacer(),
+          if (showBadge)
+            Material(
+              color: Colors.deepOrange,
+              elevation: 5.0,
+              shadowColor: Colors.red,
+              borderRadius: BorderRadius.circular(5.0),
+              child: Container(
+                width: 25,
+                height: 25,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Colors.deepOrange,
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                child: Text(
+                  "10+",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
-              child: Text(
-                "10+",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-          )
-      ]),
+            )
+        ]),
+      ),
     );
   }
 }

@@ -1,10 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:university/models/UserModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:university/models/UserModel.dart';
 import 'package:university/screens/ViewProfile.dart';
 
 TextEditingController searchController = TextEditingController();
@@ -149,7 +148,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget _buildOnNoData() {
     return Center(
         child: Text(
-      "No Post Available Yet",
+      "No User Found",
       style: TextStyle(fontSize: 20),
     ));
   }

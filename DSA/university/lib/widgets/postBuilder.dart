@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:photo_view/photo_view.dart';
 import 'package:university/models/PostModel.dart';
 import 'package:university/widgets/customImageProvider.dart';
 
@@ -11,12 +10,63 @@ class PostBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        buildPostHeader(),
-        buildPostImage(),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(20)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            ListTile(
+              title: Text(post.ownerName),
+              subtitle: Text(post.time),
+              leading: CircleAvatar(
+                backgroundImage: post.ownerImgUrl == null
+                    ? AssetImage('images/person.jpg')
+                    : CachedNetworkImageProvider(post.ownerImgUrl),
+                backgroundColor: Colors.grey,
+              ),
+              trailing: Icon(Icons.more_horiz),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.5,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: CachedNetworkImageProvider(post.photoUrl),
+                    ),
+                    borderRadius: BorderRadius.circular(20)),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  IconButton(
+                      icon: Icon(
+                        Icons.favorite,
+                        color: Colors.redAccent,
+                      ),
+                      onPressed: () {}),
+                  Text("100"),
+                  IconButton(
+                      icon: Icon(Icons.chat_bubble_outline), onPressed: () {}),
+                  Text("100"),
+                  Expanded(
+                    child: Container(),
+                  ),
+                  IconButton(
+                      icon: Icon(Icons.bookmark_border), onPressed: () {})
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 

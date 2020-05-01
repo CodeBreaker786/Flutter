@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class NavigationBarModel with ChangeNotifier {
-  bool isOpen = true;
+  bool isOpen = false;
 
   set navigationBar(value) {
     isOpen = value;
