@@ -12,9 +12,9 @@ class _ProfilePageState extends State<ProfilePage> {
       backgroundColor: Colors.white,
       body: Stack(
         children: <Widget>[
-          _getAvatar(),
+          getAvatar(),
           //  _getPost(),
-          _getPostsList(context),
+          getPostsList(context),
           // _getHeader(context),
           // _getBottomBarShadow(context),
           // _getBottomBar(context),
@@ -24,7 +24,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 }
 
-_getHeader(context) {
+Widget getHeader(context) {
   return Positioned(
     top: 0,
     child: Container(
@@ -55,7 +55,7 @@ _getHeader(context) {
           SizedBox(
             height: 10,
           ),
-          _getAvatar(),
+          getAvatar(),
           SizedBox(height: 10),
           Text(
             'Jennifer Cole',
@@ -63,18 +63,18 @@ _getHeader(context) {
           ),
           Text('I love my life', style: TextStyle(fontSize: 14)),
           SizedBox(height: 10),
-          _getUserStats(),
+          getUserStats(),
           SizedBox(
             height: 10,
           ),
-          _getUserBtns(),
+          getUserBtns(),
         ],
       ),
     ),
   );
 }
 
-_getUserBtns() {
+Widget getUserBtns() {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: <Widget>[
@@ -105,7 +105,7 @@ _getUserBtns() {
   );
 }
 
-_getUserStats() {
+Widget getUserStats() {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: <Widget>[
@@ -147,7 +147,7 @@ _getUserStats() {
   );
 }
 
-_getAvatar() {
+Widget getAvatar() {
   return Stack(
     alignment: AlignmentDirectional.center,
     children: <Widget>[
@@ -173,25 +173,25 @@ _getAvatar() {
   );
 }
 
-_getPostsList(context) {
+Widget getPostsList(context) {
   return Container(
     color: Colors.grey.withOpacity(0.35),
     child: GridView.count(
       padding: EdgeInsets.fromLTRB(10, 365, 10, 110),
       crossAxisCount: 1,
       children: <Widget>[
-        _getPost(context: context, image: AssetImage('images/person.jpg')),
-        _getPost(context: context, image: AssetImage('images/person.jpg')),
-        _getPost(context: context, image: AssetImage('images/person.jpg')),
-        _getPost(context: context, image: AssetImage('images/person.jpg')),
-        _getPost(context: context, image: AssetImage('images/person.jpg')),
-        _getPost(context: context, image: AssetImage('images/person.jpg')),
+        getPost(context: context, image: AssetImage('images/person.jpg')),
+        getPost(context: context, image: AssetImage('images/person.jpg')),
+        getPost(context: context, image: AssetImage('images/person.jpg')),
+        getPost(context: context, image: AssetImage('images/person.jpg')),
+        getPost(context: context, image: AssetImage('images/person.jpg')),
+        getPost(context: context, image: AssetImage('images/person.jpg')),
       ],
     ),
   );
 }
 
-_getPost({context, ImageProvider image}) {
+Widget getPost({context, ImageProvider image}) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Container(
@@ -207,7 +207,7 @@ _getPost({context, ImageProvider image}) {
   );
 }
 
-_getBottomBarShadow(context) {
+Widget getBottomBarShadow(context) {
   return Positioned(
     bottom: 0,
     child: Container(
@@ -225,7 +225,7 @@ _getBottomBarShadow(context) {
   );
 }
 
-_getBottomBar(context) {
+Widget getBottomBar(context) {
   return Positioned(
     bottom: 0,
     child: ClipPath(

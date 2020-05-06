@@ -8,7 +8,7 @@ class NavigationBarModel with ChangeNotifier {
     notifyListeners();
   }
 
-  get navigationBar {
+   bool get navigationBar {
     return isOpen;
   }
 }

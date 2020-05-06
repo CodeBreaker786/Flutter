@@ -29,13 +29,13 @@ class _NavigationScreenState extends State<NavigationScreen> {
     super.dispose();
   }
 
-  onPageChanged(index) {
+  void onPageChanged(index) {
     setState(() {
       this.pageIndex = index;
     });
   }
 
-  onTap(index) {
+  void onTap(index) {
     pageController.animateToPage(index,
         duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
   }

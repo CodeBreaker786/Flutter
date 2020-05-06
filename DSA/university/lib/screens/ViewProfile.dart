@@ -2,8 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class ProfileViewer extends StatelessWidget {
-  String imgUrl, email, name;
   ProfileViewer(this.imgUrl, this.name, this.email);
+  final String imgUrl, email, name;
+
 //CollectionReference ref = Firestore.instance.collection("portal");
 
   @override
@@ -34,8 +35,9 @@ class ProfileViewer extends StatelessWidget {
 }
 
 class UserInfo extends StatelessWidget {
-  String email;
   UserInfo(this.email);
+  final String email;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -104,13 +106,6 @@ class UserInfo extends StatelessWidget {
 }
 
 class ProfileHeader extends StatelessWidget {
-  final ImageProvider<dynamic> coverImage;
-  final ImageProvider<dynamic> avatar;
-  final String title;
-  final String subtitle;
-  final List<Widget> actions;
-  final BuildContext ctx;
-
   const ProfileHeader(
       {Key key,
       @required this.ctx,
@@ -120,6 +115,12 @@ class ProfileHeader extends StatelessWidget {
       this.subtitle,
       this.actions})
       : super(key: key);
+  final ImageProvider<dynamic> coverImage;
+  final ImageProvider<dynamic> avatar;
+  final String title;
+  final String subtitle;
+  final List<Widget> actions;
+  final BuildContext ctx;
 
   @override
   Widget build(BuildContext context) {
@@ -190,12 +191,6 @@ class ProfileHeader extends StatelessWidget {
 }
 
 class Avatar extends StatelessWidget {
-  final ImageProvider<dynamic> image;
-  final Color borderColor;
-  final Color backgroundColor;
-  final double radius;
-  final double borderWidth;
-
   const Avatar(
       {Key key,
       @required this.image,
@@ -205,6 +200,13 @@ class Avatar extends StatelessWidget {
       this.borderWidth = 5})
       : super(key: key);
 
+  final ImageProvider<dynamic> image;
+  final Color borderColor;
+  final Color backgroundColor;
+  final double radius;
+  final double borderWidth;
+
+  
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(

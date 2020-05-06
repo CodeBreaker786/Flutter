@@ -323,40 +323,40 @@ class _AuthPageState extends State<AuthPage> {
 
   Widget _buildProgressBar() {
     return Container(
-      child: new Stack(
+      child: Stack(
         children: <Widget>[
-          new Container(
+          Container(
             alignment: AlignmentDirectional.center,
-            decoration: new BoxDecoration(
+            decoration:   BoxDecoration(
               color: Colors.white70,
             ),
-            child: new Container(
-              decoration: new BoxDecoration(
+            child:   Container(
+              decoration:  BoxDecoration(
                   color: Colors.blue[200],
-                  borderRadius: new BorderRadius.circular(10.0)),
+                  borderRadius:   BorderRadius.circular(10.0)),
               width: 300.0,
               height: 200.0,
               alignment: AlignmentDirectional.center,
-              child: new Column(
+              child:   Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  new Center(
-                    child: new SizedBox(
+                    Center(
+                    child:   SizedBox(
                       height: 50.0,
                       width: 50.0,
-                      child: new CircularProgressIndicator(
+                      child:   CircularProgressIndicator(
                         value: null,
                         strokeWidth: 7.0,
                       ),
                     ),
                   ),
-                  new Container(
+                   Container(
                     margin: const EdgeInsets.only(top: 25.0),
-                    child: new Center(
-                      child: new Text(
+                    child:   Center(
+                      child:   Text(
                         "loading.. wait...",
-                        style: new TextStyle(color: Colors.white),
+                        style:   TextStyle(color: Colors.white),
                       ),
                     ),
                   ),

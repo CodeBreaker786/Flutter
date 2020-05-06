@@ -1,6 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User {
+  User(
+      {this.name,
+      this.email,
+      this.fatherName,
+      this.rollNo,
+      this.clas,
+      this.department,
+      this.status,
+      this.url,
+      this.uid,
+      this.phoneNo});
+
   String phoneNo;
   String email;
 
@@ -19,18 +31,6 @@ class User {
   String uid;
 
   int rollNo = 0;
-
-  User(
-      {this.name,
-      this.email,
-      this.fatherName,
-      this.rollNo,
-      this.clas,
-      this.department,
-      this.status,
-      this.url,
-      this.uid,
-      this.phoneNo});
 
   set setPhone(value) {
     phoneNo = value;
@@ -64,19 +64,19 @@ class User {
     rollNo = value;
   }
 
-  get getName => name;
+  // get getName => name;
 
-  get getUid => uid;
+  // get getUid => uid;
 
-  get getFName => fatherName;
+  // get getFName => fatherName;
 
-  get getDpt => department;
+  // get getDpt => department;
 
-  get getClass => clas;
+  // get getClass => clas;
 
-  get getRollNo => rollNo;
+  // get getRollNo => rollNo;
 
-  get getStatus => status;
+  // get getStatus => status;
 
   User fromMap(DocumentSnapshot map) {
     return User(

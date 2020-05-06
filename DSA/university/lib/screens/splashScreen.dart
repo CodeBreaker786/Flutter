@@ -10,5 +10,5 @@ class SplashScreen extends StatelessWidget {
     );
   }
 
-  Widget buildw() {}
+  
 }

@@ -1,19 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
 
 class Post {
-  String photoUrl;
-  String ownerId;
-  String ownerName;
-  String ownerImgUrl;
-  String postId;
-  String date;
-  String time;
-  String loction;
-  String caption;
-  Map<String, dynamic> likes = {};
-  Map<String, dynamic> comments = {};
-
   Post(
       {this.ownerId,
       this.photoUrl,
@@ -37,9 +24,22 @@ class Post {
         loction: snapshot['location'],
         caption: snapshot['caption'],
         likes: snapshot['likes'],
-        ownerImgUrl:snapshot['ownerImgUrl'] ,
+        ownerImgUrl: snapshot['ownerImgUrl'],
         comments: snapshot['commments']);
   }
+
+  String photoUrl;
+  String ownerId;
+  String ownerName;
+  String ownerImgUrl;
+  String postId;
+  String date;
+  String time;
+  String loction;
+  String caption;
+  Map<String, dynamic> likes = {};
+  Map<String, dynamic> comments = {};
+
   Map<String, dynamic> fromUser() {
     return {
       'ownerId': this.ownerId,
@@ -47,12 +47,12 @@ class Post {
       'photoUrl': this.photoUrl,
       'time': this.time,
       'date': this.date,
-      'ownerName':this.ownerName,
+      'ownerName': this.ownerName,
       'loction': this.loction,
       'caption': this.caption,
       'likes': this.likes,
       'comments': this.comments,
-      'ownerImgUrl':this.ownerImgUrl,
+      'ownerImgUrl': this.ownerImgUrl,
     };
   }
 }

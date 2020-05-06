@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:photo_view/photo_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:university/screens/updateProfile.dart';
@@ -20,7 +19,7 @@ class _ProfileState extends State<Profile> {
     super.initState();
   }
 
-  getData() async {
+  Future<DocumentSnapshot> getData() async {
     FirebaseUser firebaseUser = await FirebaseAuth.instance.currentUser();
     DocumentSnapshot snapshot = await Firestore.instance
         .collection("portal")
@@ -87,8 +86,9 @@ class _ProfileState extends State<Profile> {
 }
 
 class UserInfo extends StatelessWidget {
-  String email;
   UserInfo(this.email);
+  final email;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -157,12 +157,6 @@ class UserInfo extends StatelessWidget {
 }
 
 class ProfileHeader extends StatelessWidget {
-  final ImageProvider<dynamic> coverImage;
-  final ImageProvider<dynamic> avatar;
-  final String title;
-  final String subtitle;
-  final List<Widget> actions;
-
   const ProfileHeader(
       {Key key,
       @required this.coverImage,
@@ -171,6 +165,12 @@ class ProfileHeader extends StatelessWidget {
       this.subtitle,
       this.actions})
       : super(key: key);
+
+  final ImageProvider<dynamic> coverImage;
+  final ImageProvider<dynamic> avatar;
+  final String title;
+  final String subtitle;
+  final List<Widget> actions;
 
   @override
   Widget build(BuildContext context) {
@@ -231,12 +231,6 @@ class ProfileHeader extends StatelessWidget {
 }
 
 class Avatar extends StatelessWidget {
-  final ImageProvider<dynamic> image;
-  final Color borderColor;
-  final Color backgroundColor;
-  final double radius;
-  final double borderWidth;
-
   const Avatar(
       {Key key,
       @required this.image,
@@ -246,6 +240,13 @@ class Avatar extends StatelessWidget {
       this.borderWidth = 5})
       : super(key: key);
 
+  final ImageProvider<dynamic> image;
+  final Color borderColor;
+  final Color backgroundColor;
+  final double radius;
+  final double borderWidth;
+
+  
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(

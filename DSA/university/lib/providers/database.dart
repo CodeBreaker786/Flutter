@@ -8,7 +8,7 @@ class DataBase with ChangeNotifier {
   // final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
   User currentUser;
 
-  get user => currentUser;
+  User get user => currentUser;
 
   Future<void> update() async {
     FirebaseUser user;

@@ -153,7 +153,7 @@ class _SearchScreenState extends State<SearchScreen> {
     ));
   }
 
-  handleSearch(String query) {
+  void handleSearch(String query) {
     Future<QuerySnapshot> users =
         ref.where("name", isGreaterThanOrEqualTo: query).getDocuments();
     setState(() {
@@ -161,7 +161,7 @@ class _SearchScreenState extends State<SearchScreen> {
     });
   }
 
-  onQueryChanged(query) {
+  void onQueryChanged(query) {
     handleSearch(query);
     if (query != "") {
       setState(() {

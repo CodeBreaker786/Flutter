@@ -6,7 +6,7 @@ import 'package:university/widgets/ImageSlider.dart';
 import 'package:university/widgets/drawer2.dart';
 
 class HomeScreen extends StatelessWidget {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   static final String route = "/home";
 
@@ -24,7 +24,8 @@ class HomeScreen extends StatelessWidget {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          return Duration(milliseconds: 30000);
+          Duration future = await Duration(seconds: 10);
+          return future;
         },
         child: SingleChildScrollView(
           physics: ScrollPhysics(),

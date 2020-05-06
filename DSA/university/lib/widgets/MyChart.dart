@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class MyChart extends StatelessWidget {
-  List<CircularStackEntry> circularData = <CircularStackEntry>[
-    new CircularStackEntry(
-      <CircularSegmentEntry>[
-        new CircularSegmentEntry(700.0, Color(0xff4285F4), rankKey: 'Q1'),
-        new CircularSegmentEntry(1000.0, Color(0xfff3af00), rankKey: 'Q2'),
-        new CircularSegmentEntry(1800.0, Color(0xffec3337), rankKey: 'Q3'),
-        new CircularSegmentEntry(1000.0, Color(0xff40b24b), rankKey: 'Q4'),
-      ],
-      rankKey: 'Quarterly Profits',
-    ),
-  ];
+  // List<CircularStackEntry> circularData = <CircularStackEntry>[
+  //   new CircularStackEntry(
+  //     <CircularSegmentEntry>[
+  //       new CircularSegmentEntry(700.0, Color(0xff4285F4), rankKey: 'Q1'),
+  //       new CircularSegmentEntry(1000.0, Color(0xfff3af00), rankKey: 'Q2'),
+  //       new CircularSegmentEntry(1800.0, Color(0xffec3337), rankKey: 'Q3'),
+  //       new CircularSegmentEntry(1000.0, Color(0xff40b24b), rankKey: 'Q4'),
+  //     ],
+  //     rankKey: 'Quarterly Profits',
+  //   ),
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +38,8 @@ class MyChart extends StatelessWidget {
                   animation: true,
                   animateFromLastPercent: true,
                   percent: (10 + 1) / 20,
-                  center: new Text(
-                      ("${(((10 + 1) / 20) * 100).toStringAsFixed(2)}%")),
+                  center:
+                      Text(("${(((10 + 1) / 20) * 100).toStringAsFixed(2)}%")),
                   animationDuration: 100,
                   progressColor: Colors.green,
                 )),

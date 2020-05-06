@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'auth.dart';
 import 'navigationScreen.dart';
 
-class wraper extends StatelessWidget {
+class Wraper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authication = Provider.of<User>(context);

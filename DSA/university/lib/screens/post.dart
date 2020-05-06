@@ -12,7 +12,7 @@ import 'package:university/providers/database.dart';
 import 'package:university/screens/uploadPost.dart';
 import 'package:university/widgets/postBuilder.dart';
 
-CollectionReference postsRef = Firestore.instance.collection("posts");
+CollectionReference postsRef = Firestore.instance.collection("portal");
 
 class Posts extends StatefulWidget {
   const Posts({Key key}) : super(key: key);
@@ -32,12 +32,18 @@ class _PostsState extends State<Posts> {
     return Scaffold(
       backgroundColor: Theme.of(context).accentColor,
       appBar: AppBar(
-        title: Text('News Feed'),
+        title: Text(
+          'News Feed',
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontStyle: FontStyle.italic,
+              fontSize: 16.0),
+        ),
         centerTitle: true,
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          return Duration(milliseconds: 30000);
+          return Duration(milliseconds: 3000);
         },
         child: _buildFutureBuilder(),
       ),
@@ -45,15 +51,18 @@ class _PostsState extends State<Posts> {
     );
   }
 
-  handleSearch() async {
-    Stream<QuerySnapshot> users = postsRef.snapshots();
-    //searchResultsFuture = users;
-    return searchResultsFuture;
-  }
+  // Steam<QuerySnapshot> handleSearch() async {
+  //   Stream<QuerySnapshot> users = postsRef.document().snapshots();
+  //   //searchResultsFuture = users;
+  //   return searchResultsFuture;
+  // }
 
   Widget _buildFutureBuilder() {
     return StreamBuilder<QuerySnapshot>(
-      stream: postsRef.snapshots(),
+      stream: postsRef
+          .document('O0NqyxYyavMsGjTYAgGLXP6BDfr2')
+          .collection('userPosts')
+          .snapshots(),
       builder: (context, snapshots) {
         if (!snapshots.hasData) {
           print(snapshots.hasData);
@@ -145,7 +154,9 @@ class _PostsState extends State<Posts> {
     setState(() {
       _imageFile = selected;
     });
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => UploadScreen(_imageFile)));
+    if (_imageFile != null) {
+      await Navigator.push(context,
+          MaterialPageRoute(builder: (context) => UploadScreen(_imageFile)));
+    }
   }
 }

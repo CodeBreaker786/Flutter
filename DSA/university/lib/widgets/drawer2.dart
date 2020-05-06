@@ -19,7 +19,7 @@ class LightDrawerPage extends StatefulWidget {
 User user;
 
 class _LightDrawerPageState extends State<LightDrawerPage> {
-  final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+  // final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   String email, name;
 
   final Color primary = Colors.white;
@@ -50,7 +50,7 @@ class _LightDrawerPageState extends State<LightDrawerPage> {
     super.initState();
   }
 
-  getData() async {
+  Future<DocumentSnapshot> getData() async {
     FirebaseUser firebaseUser = await FirebaseAuth.instance.currentUser();
     DocumentSnapshot snapshot = await Firestore.instance
         .collection("portal")
@@ -171,7 +171,7 @@ class _LightDrawerPageState extends State<LightDrawerPage> {
       onTap: () {
         Navigator.pop(context);
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => practice()));
+            context, MaterialPageRoute(builder: (context) => Practice()));
       },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 5.0),

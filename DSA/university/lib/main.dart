@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
             // ),
             accentColor: Colors.lightBlue[100],
             primaryColor: Colors.blue[400]),
-        home: wraper(),
+        home: Wraper(),
         routes: {
           HomeScreen.route: (context) => HomeScreen(),
           SearchScreen.route: (context) => SearchScreen(),

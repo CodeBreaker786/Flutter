@@ -11,11 +11,11 @@ import 'package:image_picker/image_picker.dart';
 CollectionReference ref = Firestore.instance.collection("portal");
 
 class UpdateProfile extends StatefulWidget {
-  static final String route = "/UpdateProfile";
-  String title;
   UpdateProfile({this.title});
-
-  createState() => _UpdateProfileState();
+  final String title;
+  static final String route = "/UpdateProfile";
+  @override
+  _UpdateProfileState createState() => _UpdateProfileState();
 }
 
 class _UpdateProfileState extends State<UpdateProfile> {
@@ -28,7 +28,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
   Future<void> _cropImage() async {
     File cropped = await ImageCropper.cropImage(
         sourcePath: _imageFile.path,
-        cropStyle: CropStyle.rectangle,
+        cropStyle: CropStyle.circle,
         aspectRatioPresets: Platform.isAndroid
             ? [
                 CropAspectRatioPreset.square,
@@ -50,7 +50,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
             toolbarTitle: 'Cropper',
             toolbarColor: Colors.deepOrange,
             toolbarWidgetColor: Colors.white,
-            initAspectRatio: CropAspectRatioPreset.square,
+            initAspectRatio: CropAspectRatioPreset.original,
             lockAspectRatio: true),
         iosUiSettings: IOSUiSettings(
           title: 'Cropper',

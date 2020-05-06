@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -16,25 +15,23 @@ import 'package:uuid/uuid.dart';
 CollectionReference portalRef = Firestore.instance.collection("portal");
 
 class UploadScreen extends StatefulWidget {
-  File cropedImage;
-
   UploadScreen(this.cropedImage);
+  final File cropedImage;
 
   @override
   _UploadScreenState createState() => _UploadScreenState(cropedImage);
 }
 
 class _UploadScreenState extends State<UploadScreen> {
+  _UploadScreenState(this._imageFile);
+  TextEditingController captionController = TextEditingController();
   bool isLoding = false;
   File _imageFile;
   User user;
 
-  _UploadScreenState(this._imageFile);
-
   Future<void> _cropImage() async {
     File cropped = await ImageCropper.cropImage(
         sourcePath: _imageFile.path,
-        cropStyle: CropStyle.rectangle,
         aspectRatioPresets: Platform.isAndroid
             ? [
                 CropAspectRatioPreset.square,
@@ -53,13 +50,13 @@ class _UploadScreenState extends State<UploadScreen> {
               ],
         androidUiSettings: AndroidUiSettings(
             cropFrameColor: Theme.of(context).primaryColor,
-            toolbarTitle: 'Cropper',
+            toolbarTitle: 'Edit Image',
             toolbarColor: Colors.deepOrange,
             toolbarWidgetColor: Colors.white,
-            initAspectRatio: CropAspectRatioPreset.square,
+            initAspectRatio: CropAspectRatioPreset.original,
             lockAspectRatio: true),
         iosUiSettings: IOSUiSettings(
-          title: 'Cropper',
+          title: 'Edit Image',
         ));
 
     setState(() {
@@ -115,20 +112,44 @@ class _UploadScreenState extends State<UploadScreen> {
                 Positioned(
                     child: Container(
                         alignment: Alignment.topRight,
-                        child: IconButton(
-                            icon: Icon(
-                              Icons.crop,
-                              size: 30,
-                            ),
-                            onPressed: () {
-                              _cropImage();
-                            }))),
+                        child: Container(
+                          child: IconButton(
+                              hoverColor: Theme.of(context).accentColor,
+                              icon: Icon(
+                                Icons.crop,
+                                size: 30,
+                              ),
+                              onPressed: () {
+                                _cropImage();
+                              }),
+                        ))),
               ],
             ),
             ListTile(
-              leading: CircleAvatar(
-                  backgroundImage: CachedNetworkImageProvider(user.url)),
-            )
+                leading: CircleAvatar(
+                  backgroundColor: Theme.of(context).accentColor,
+                  backgroundImage: user.url == true
+                      ? CachedNetworkImageProvider(user.url)
+                      : AssetImage('images/person.jpg'),
+                ),
+                title: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: TextField(
+                    controller: captionController,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10.0),
+                          ),
+                        ),
+                        filled: true,
+                        labelText: 'Caption',
+                        // helperText: "kh",
+                        hintStyle: TextStyle(color: Colors.grey[800]),
+                        hintText: "Caption...",
+                        fillColor: Colors.white70),
+                  ),
+                ))
           ],
         ),
       ),
@@ -144,7 +165,7 @@ class _UploadScreenState extends State<UploadScreen> {
     StorageReference storageReference = FirebaseStorage.instance
         .ref()
         .child('posts')
-        .child('post_${postUid}.jpg');
+        .child('post_$postUid.jpg');
     StorageUploadTask uploadTask = await storageReference.putFile(image);
     await uploadTask.onComplete;
     String fileUrl = await storageReference.getDownloadURL();
@@ -155,30 +176,29 @@ class _UploadScreenState extends State<UploadScreen> {
     print(datetime.toString());
 
     Post post = Post(
+        caption: captionController.text,
         postId: postUid,
         ownerId: user.uid,
         photoUrl: fileUrl,
         ownerName: user.name,
         ownerImgUrl: user.url,
         date: DateFormat.yMMMMd("en_US").format(datetime),
-        time: DateFormat.jm().format(datetime)
+        time: DateFormat.jm().format(datetime),
+        likes: {user.uid: false}
         // date: DateFormat.(time))
         );
     await portalRef
         .document(user.uid)
-        .collection('posts')
+        .collection('userPosts')
         .document(postUid)
         .setData(
-          post.fromUser(),
-        );
-    await Firestore.instance.collection('posts').document(postUid).setData(
           post.fromUser(),
         );
 
     //return storageReference.getDownloadURL();
   }
 
-  Future uploadURL(imageUrl) async {
-    FirebaseUser user = await FirebaseAuth.instance.currentUser();
-  }
+  // Future uploadURL(imageUrl) async {
+  //   FirebaseUser user = await FirebaseAuth.instance.currentUser();
+  // }
 }
