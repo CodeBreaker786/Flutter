@@ -14,9 +14,9 @@ class ImageSlider extends StatelessWidget {
   final List<Post> searchResults = [];
 
   Future<QuerySnapshot> getImages() async {
-    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    // FirebaseUser user = await FirebaseAuth.instance.currentUser();
     Future<QuerySnapshot> documentSnapshot =
-        portalRef.document(user.uid).collection('userPosts').getDocuments();
+        portalRef.document('user.uid').collection('userPosts').getDocuments();
     return documentSnapshot;
   }
 

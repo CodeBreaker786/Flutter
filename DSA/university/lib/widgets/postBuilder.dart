@@ -210,13 +210,13 @@ class _PostBuilderState extends State<PostBuilder> {
     return count;
   }
 
-  handlePostrLikes() async {
+  Future handlePostrLikes() async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     bool _isLiked = widget.post.likes[user.uid] == true;
     print(_isLiked);
 
     if (_isLiked) {
-      portalRef
+      await portalRef
           .document(widget.post.ownerId)
           .collection('userPosts')
           .document(widget.post.postId)
@@ -229,7 +229,7 @@ class _PostBuilderState extends State<PostBuilder> {
         widget.post.likes[user.uid] = false;
       });
     } else if (!_isLiked) {
-      portalRef
+      await portalRef
           .document(widget.post.ownerId)
           .collection('userPosts')
           .document(widget.post.postId)
