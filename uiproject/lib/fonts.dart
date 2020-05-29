@@ -7,3 +7,9 @@ TextStyle googleTextStyle(Color color, double size,
   return GoogleFonts.poppins(
       color: color, fontSize: size, fontWeight: fontWeight);
 }
+
+TextStyle googleChivoTextStyle(Color color, double size,
+    {FontWeight fontWeight = FontWeight.w200}) {
+  return GoogleFonts.poppins(
+      color: color, fontSize: size, fontWeight: fontWeight);
+}

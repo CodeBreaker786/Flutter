@@ -39,7 +39,7 @@ Widget buildWalletCard(
                             height: 33,
                             width: 37,
                             decoration: BoxDecoration(
-                                color: UiColors.yellowcircle,
+                                color: UiColors.yellowircle,
                                 borderRadius: BorderRadius.circular(40)),
                           )),
                       Positioned(

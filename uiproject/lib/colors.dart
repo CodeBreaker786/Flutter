@@ -12,5 +12,6 @@ class UiColors {
   static const Color mailcolor = Color(0xff77869E);
   static const Color greyshade = Color(0xffF8F9F9);
   static const Color redcircle = Color(0xffED0006);
-  static const Color yellowcircle = Color(0xffF9A000);
+  static const Color yellowircle = Color(0xffF9A000);
+  static const Color textColor = Color(0xff8492A2);
 }

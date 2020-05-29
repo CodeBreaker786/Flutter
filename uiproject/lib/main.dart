@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uiproject/screens/login_screen/login_screen.dart';
+import 'package:uiproject/bottom_navigation_bar.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,6 +16,6 @@ class MyApp extends StatelessWidget {
           primaryColorDark: Colors.green,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: LoginScreen());
+        home: BottomNaviBar());
   }
 }
