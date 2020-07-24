@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:gcuf/models/Authentication.dart';
 import 'package:gcuf/models/User.dart';
 import 'package:gcuf/screens/Admin_Panel/AdminPanel.dart';
-import 'package:gcuf/screens/practice.dart';
 
 class LightDrawerPage extends StatefulWidget {
   @override

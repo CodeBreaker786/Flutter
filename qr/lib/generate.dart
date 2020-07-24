@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Genrate extends StatefulWidget {
   @override
@@ -10,31 +11,23 @@ TextEditingController textEditingController = TextEditingController();
 Image image;
 
 class _GenrateState extends State<Genrate> {
+  String data = 'No Data';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Genrate QR Code'),
       ),
-      body: Column(
-        children: <Widget>[
-          NetworkGiffyDialog(
-              image: Image.network(
-                  "https://raw.githubusercontent.com/Shashank02051997/FancyGifDialog-Android/master/GIF's/gif14.gif"),
-              title: Text("data")),
-          TextField(
-            controller: textEditingController,
-          ),
-        ],
-      ),
+      body: Center(child: Text(data)),
       floatingActionButton: FloatingActionButton(onPressed: () async {
-//        Uint8List result = await scanner
-//            .generateBarCode(textEditingController.text);
-//        final image = await QrPainter(
-//                data: textEditingController.text,
-//                color: Colors.black,
-//                emptyColor: Colors.white)
-//            .toImageData(400);
+        final _prefs = await SharedPreferences.getInstance();
+
+        //await _prefs.setString('tenatName', "tenantName");
+        var result = await _prefs.getString('tenatName');
+        print(result);
+        setState(() {
+          data = result;
+        });
       }),
     );
   }

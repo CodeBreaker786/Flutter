@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "826470569713",
+    "firebase_url": "https://avalinks.firebaseio.com",
+    "project_id": "avalinks",
+    "storage_bucket": "avalinks.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:826470569713:android:5e03f31c3a666bac",
+        "android_client_info": {
+          "package_name": "com.freshcodes.avalinks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "826470569713-rl9p6le7ha103hp8uo89jm1t57ns6jmj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.freshcodes.avalinks",
+            "certificate_hash": "1efa7a234068ec796998aa0808c33d7f66a7ec58"
+          }
+        },
+        {
+          "client_id": "826470569713-jpseeqi7gggsqujbqrc17okl5nqadpir.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmVhnLGhNXZ7ZjJyRAwoC00572Z3yJ1dg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "826470569713-jpseeqi7gggsqujbqrc17okl5nqadpir.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "826470569713-49i0fuav95v9ife6l5pn7u27mp13juch.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.freshcodes.avalinks"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

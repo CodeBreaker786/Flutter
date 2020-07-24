@@ -1,3 +1,5 @@
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uiproject/bottom_navigation_bar.dart';
 
@@ -10,12 +12,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
         debugShowCheckedModeBanner: false,
+
         title: 'Flutter Demo',
+
         theme: ThemeData(
           primaryColorDark: Colors.green,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
+
         home: BottomNaviBar());
   }
 }

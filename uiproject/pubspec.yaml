@@ -21,8 +21,8 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-
   charts_flutter: ^0.6.0
+  flutter_bloc: ^3.2.0
   dotted_border: ^1.0.5
   font_awesome_flutter: ^8.5.0
   google_fonts: ^1.1.0
@@ -62,7 +62,6 @@ flutter:
     - icons/up1x.png
     - Logo.png
     - icons/down1x.png
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

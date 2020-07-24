@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:uiproject/colors.dart';
+import 'package:uiproject/screens/expenses/expense.dart';
 import 'package:uiproject/screens/home_page/home_page.dart';
+import 'package:uiproject/screens/profile/profile.dart';
 import 'package:uiproject/screens/splash_screen/splash_screen.dart';
+import 'package:uiproject/screens/wallet_screen/wallet.dart';
 
 class BottomNaviBar extends StatefulWidget {
   @override
@@ -60,7 +63,7 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
                 icon: Icon(Icons.home), title: Text("Home")),
           ]),
       body: PageView(
-        children: <Widget>[SplashScreen(), HomeScreen()],
+        children: <Widget>[  HomeScreen(),Expense(),WalletScreen(),Profile()],
         controller: pageController,
         physics: NeverScrollableScrollPhysics(),
       ),

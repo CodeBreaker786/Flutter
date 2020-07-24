@@ -99,25 +99,27 @@ class _AuthPageState extends State<AuthPage> {
                       color: Theme.of(context).primaryColor),
                   label: Text("Continue with Google"),
                   onPressed: () async {
-                    FirebaseAuth _auth= await FirebaseAuth.instance;
+                    FirebaseAuth _auth = FirebaseAuth.instance;
                     _auth.verifyPhoneNumber(
                         phoneNumber: "+923166788626",
                         timeout: Duration(seconds: 60),
-                        verificationCompleted: (AuthCredential credential) async {
+                        verificationCompleted:
+                            (AuthCredential credential) async {
+                          AuthResult authResult =
+                              await _auth.signInWithCredential(credential);
 
-          AuthResult authResult = await _auth.signInWithCredential(credential);
+                          FirebaseUser user = authResult.user;
 
-          FirebaseUser user = authResult.user;
-
-          if (user != null) {
-          } else {
-            print("ERROR");
-          }
+                          if (user != null) {
+                          } else {
+                            print("ERROR");
+                          }
                         },
                         verificationFailed: (AuthException exception) {
                           print("error");
                         },
-                        codeSent: (String verification, [int forceResendingToken]) {
+                        codeSent: (String verification,
+                            [int forceResendingToken]) {
                           showDialog(
                               context: context,
                               barrierDismissible: false,
@@ -135,15 +137,23 @@ class _AuthPageState extends State<AuthPage> {
                                         decoration: InputDecoration(
                                           hintText: 'Enter Code',
                                           enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.circular(12.0)),
+                                              borderRadius:
+                                                  BorderRadius.circular(12.0)),
                                           focusedBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.circular(12.0)),
+                                              borderRadius:
+                                                  BorderRadius.circular(12.0)),
                                           errorBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.circular(12.0),
-                                              borderSide: BorderSide(color: Colors.red)),
-                                          focusedErrorBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.circular(12.0),
-                                              borderSide: BorderSide(color: Colors.red)),
+                                              borderRadius:
+                                                  BorderRadius.circular(12.0),
+                                              borderSide: BorderSide(
+                                                  color: Colors.red)),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12.0),
+                                                  borderSide: BorderSide(
+                                                      color: Colors.red)),
                                         ),
                                       )
                                     ],
@@ -151,11 +161,13 @@ class _AuthPageState extends State<AuthPage> {
                                   actions: <Widget>[
                                     Text(
                                       "Wait for Automatic Detection!",
-                                      style: TextStyle(fontSize: 10, color: Colors.red),
+                                      style: TextStyle(
+                                          fontSize: 10, color: Colors.red),
                                     ),
                                     FlatButton(
                                       shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(12)),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
                                       child: Text("Confirm"),
                                       textColor: Colors.white,
                                       color: Colors.lightBlue,
@@ -163,10 +175,11 @@ class _AuthPageState extends State<AuthPage> {
                                         setState(() {});
 
                                         AuthCredential credential =
-                                        PhoneAuthProvider.getCredential(
-                                            verificationId: verification, smsCode: "12345");
-                                        AuthResult result =
-                                        await _auth.signInWithCredential(credential);
+                                            PhoneAuthProvider.getCredential(
+                                                verificationId: verification,
+                                                smsCode: "12345");
+                                        AuthResult result = await _auth
+                                            .signInWithCredential(credential);
                                         FirebaseUser user = result.user;
                                         if (user != null) {
                                           print("user is not null");
@@ -496,7 +509,7 @@ class _AuthPageState extends State<AuthPage> {
     }
 
     print("following biometrics are available");
-    if (await availableBiometrics.isNotEmpty) {
+    if (  availableBiometrics.isNotEmpty) {
       availableBiometrics.forEach((ab) {
         print("\ttech: $ab");
       });

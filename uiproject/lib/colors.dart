@@ -1,7 +1,5 @@
-import 'dart:ui' show Color;
 
-import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
+import 'dart:ui';
 
 class UiColors {
   UiColors._();
